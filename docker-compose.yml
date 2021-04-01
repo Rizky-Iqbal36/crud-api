@@ -16,16 +16,16 @@ services:
       - net
 
   database:
-    container_name: mongo
-    image: mongo
-    ports:
-      - '27017:27017'
+    container_name: database
+    image: postgres
+    restart: always
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=developer
-    volumes:
-      - mongodb:/data/db
-      - mongodb_config:/data/configdb
+      TZ: 'GMT+7'
+      PGTZ: 'GMT+7'
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - 5432:5432
     networks:
       - net
 
@@ -36,10 +36,6 @@ services:
       - 9000:9000
     networks:
       - net
-
-volumes:
-  mongodb:
-  mongodb_config:
 
 networks:
   net:
