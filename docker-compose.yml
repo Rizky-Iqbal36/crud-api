@@ -1,0 +1,46 @@
+version: '2'
+services:
+  app:
+    container_name: app
+    build: .
+    volumes:
+      - ./:/app
+    restart: always
+    working_dir: /app
+    depends_on:
+      - database
+    ports:
+      - 3000:3000
+    command: npm run start:dev
+    networks:
+      - net
+
+  database:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=developer
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - net
+
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube:latest
+    ports:
+      - 9000:9000
+    networks:
+      - net
+
+volumes:
+  mongodb:
+  mongodb_config:
+
+networks:
+  net:
+    driver: bridge
