@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-pod
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: mongo-pod
+      labels:
+        app: mongo-pod
+    spec:
+      containers:
+        - name: mongodb-container
+          image: mongo
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_USERNAME
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_PASSWORD
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongodb-pv-claim
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-pv-claim
+          persistentVolumeClaim:
+            claimName: mongodb-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+  labels:
+    app: mongo-service
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+  selector:
+    app: mongo-pod
