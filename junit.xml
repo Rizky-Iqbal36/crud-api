@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="1" failures="0" errors="0" time="11.11">
-  <testsuite name="check if the server is running or not" errors="0" failures="0" skipped="0" timestamp="2021-04-01T11:12:25" time="10.783" tests="1">
-    <testcase classname="check if the server is running or not should hit health check endpoint" name="check if the server is running or not should hit health check endpoint" time="0.052">
-    </testcase>
-  </testsuite>
-</testsuites>
