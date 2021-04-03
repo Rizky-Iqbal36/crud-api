@@ -1,11 +1,11 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common'
 
 @Controller('health')
 export class HealthCheckController {
   @Get()
   async get() {
     return {
-      status: 'ok',
-    };
+      status: 'ok'
+    }
   }
 }
