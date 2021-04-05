@@ -17,13 +17,13 @@ export class BookDataSeed {
 
   async createOne() {
     return this.bookRepository.save({
-      isActive: faker.random.boolean(),
+      isActive: faker.datatype.boolean(),
       title: faker.name.title(),
       ISBN: faker.finance.creditCardNumber(),
       author: `${faker.name.firstName()} ${faker.name.middleName()} ${faker.name.lastName()}`,
       publication: faker.date.recent(),
-      pages: faker.random.number(),
-      uploadBy: faker.random.number(),
+      pages: faker.datatype.number(),
+      uploadBy: faker.datatype.number(),
       aboutBook: faker.commerce.productDescription()
     })
   }
