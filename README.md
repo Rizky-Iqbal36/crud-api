@@ -64,10 +64,13 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Rizky Iqbal](mailto:rizkiiqbal36@gmail.com)
+- Website - [https://rizky-iqbal.netlify.app](https://rizky-iqbal.netlify.app)
+- Instagram - [@rizky_iqbal48](https://www.instagram.com/rizky_iqbal48)
+- Twitter - [@rizkyiqbal36](https://www.twitter.com/rizkyiqbal36)
+- Github - [Rizky-Iqbal36](https://github.com/Rizky-Iqbal36)
+- Gitlab - [rizkyiqbal36](https://gitlab.com/rizkyiqbal36)
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is [MIT licensed](LICENSE).
