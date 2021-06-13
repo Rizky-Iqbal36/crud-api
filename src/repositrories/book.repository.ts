@@ -1,9 +1,15 @@
-import { EntityRepository, Repository } from 'typeorm'
-import { BookModel } from '@database/models/book.model'
+import { Injectable } from '@nestjs/common'
+import { BookModel, IBook } from '@database/models/book.model'
 
-@EntityRepository(BookModel)
-export class BookRepository extends Repository<BookModel> {
+@Injectable()
+export class BookRepository {
+  private readonly bookModel = BookModel
+
   public async getAllBooks() {
-    return this.find()
+    return this.bookModel.find().sort({ publication: -1 })
+  }
+
+  public async createBook(data: IBook) {
+    return this.bookModel.create(data)
   }
 }

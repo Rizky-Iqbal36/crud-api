@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common'
 import { controllers } from '@root/controllers/index'
-import database from '@database/index'
+import { databaseProviders } from '@database/index'
 import { repositories } from '@root/repositrories/index'
 
 @Module({
-  imports: [database, repositories],
   controllers,
-  providers: []
+  providers: [...databaseProviders, ...repositories]
 })
 export class AppModule {}

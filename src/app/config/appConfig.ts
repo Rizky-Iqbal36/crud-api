@@ -5,17 +5,31 @@ config()
 const appConfig = {
   app: {
     name: pjson.name,
-    version: pjson.version
+    version: pjson.version,
+    port: process.env.PORT || 3000
   },
-  database: {
-    dialect: process.env.DATABASE_DIALECT,
-    host: process.env.DATABASE_HOST,
-    port: parseInt(process.env.DATABASE_PORT),
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.NODE_ENV === 'test' ? `${process.env.DATABASE_NAME}_test` : process.env.DATABASE_NAME,
-    autoLoadModels: true,
-    synchronize: true // set true to sync based on models,
+  mongodb: {
+    host: process.env.MONGO_DB_HOST,
+    uri: () => {
+      if (process.env.APP_ENV === 'local') return process.env.MONGO_DB_URI + 'localhost'
+      else if (process.env.APP_ENV === 'test') return process.env.MONGO_DB_URI + 'database'
+      else return process.env.MONGO_DB_URI
+    },
+    user: process.env.MONGO_DB_USER,
+    pass: process.env.MONGO_DB_PASS,
+    db: process.env.MONGO_DB_DB_NAME,
+    authSource: process.env.MONGO_DB_AUTH_SOURCE
+  },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
+    assets: process.env.APP_ENV === 'local' ? process.env.CLOUDINARY_ASSETS + '_test' : process.env.CLOUDINARY_ASSETS
+  },
+  auth: {
+    jwtSecret: process.env.JWT_SECRET,
+    jwtExpiration: process.env.JWT_EXPIRATION,
+    ecryptJwtSecret: process.env.ENCRYPT_JWT_SECRET
   }
 }
 

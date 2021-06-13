@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common'
-import { Connection } from 'typeorm'
-import { BookDataSeed } from '@database/seeds/book.seed'
+import { SeedBookData } from '@database/seeds/book.seed'
 
-export const seedFiles = [BookDataSeed]
+export const seedFiles = [SeedBookData]
 
 @Injectable()
 export default class Seeds {
-  constructor(private readonly connection: Connection, private readonly bookDataSeed: BookDataSeed) {}
+  constructor(private readonly bookDataSeed: SeedBookData) {}
 
   async exec() {
     await this.registerSeeder()

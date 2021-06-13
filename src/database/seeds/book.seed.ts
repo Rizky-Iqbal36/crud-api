@@ -1,13 +1,12 @@
 import faker from 'faker'
 import { BookRepository } from '@root/repositrories/book.repository'
 import { Injectable } from '@nestjs/common'
+import { BookStatusEnum } from '@root/interfaces/enum'
 
 @Injectable()
-export class BookDataSeed {
+export class SeedBookData {
   constructor(private readonly bookRepository: BookRepository) {}
-
   async createMany(loop: number) {
-    await this.bookRepository.delete({})
     const all = []
     for (let i = 0; i < loop; i++) {
       all.push(await this.createOne())
@@ -15,16 +14,25 @@ export class BookDataSeed {
     return all
   }
 
-  async createOne() {
-    return this.bookRepository.save({
+  async createOne(categoryId?: string[], bookMarkedBy?: string[]) {
+    //, authors?: string[]) {
+    const BookStatus = Object.keys(BookStatusEnum).map(val => BookStatusEnum[val])
+    return this.bookRepository.createBook({
       isActive: faker.datatype.boolean(),
+      status: faker.random.arrayElement(BookStatus),
       title: faker.name.title(),
-      ISBN: faker.finance.creditCardNumber(),
-      author: `${faker.name.firstName()} ${faker.name.middleName()} ${faker.name.lastName()}`,
-      publication: faker.date.recent(),
+      isbn: faker.finance.creditCardNumber(),
+      authors: [`${faker.name.firstName()} ${faker.name.middleName()} ${faker.name.lastName()}`],
+      ...(categoryId ? { categoryIds: categoryId } : {}),
+      publication: faker.date.past(10, new Date()),
       pages: faker.datatype.number(),
-      uploadBy: faker.datatype.number(),
-      aboutBook: faker.commerce.productDescription()
+      uploadBy: '607ea12bd21e76a4433ea592', //temporary, wait for user integration
+      views: 0,
+      aboutBook: faker.commerce.productDescription(),
+      file: `file_${faker.lorem.sentence(1)}epub`,
+      thumbnail: faker.image.animals(),
+      bookMarked: 0,
+      ...(bookMarkedBy ? { bookMarkedBy: bookMarkedBy } : {})
     })
   }
 }

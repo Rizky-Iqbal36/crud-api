@@ -17,25 +17,21 @@ services:
 
   database:
     container_name: database
-    image: postgres
-    restart: always
+    image: mongo:4.2.7
     environment:
-      POSTGRES_USERNAME: postgres
-      POSTGRES_PASSWORD: 123456
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=developer
+    ports:
+      - 27017:27017
+    networks:
+      - net
     volumes:
-      - ./resources/script/postgres_init_database.sql:/docker-entrypoint-initdb.d/postgres_init_database.sql
-    ports:
-      - 5432:5432
-    networks:
-      - net
+      - database:/data/db
+      - database_config:/data/configdb
 
-  sonarqube:
-    container_name: sonarqube
-    image: sonarqube:latest
-    ports:
-      - 9000:9000
-    networks:
-      - net
+volumes:
+  database:
+  database_config:
 
 networks:
   net:
