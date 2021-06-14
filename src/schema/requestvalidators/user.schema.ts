@@ -15,6 +15,11 @@ export class UserSchema {
       password: Joi.string().min(8).required()
     })
   }
+  changePassword = {
+    body: Joi.object({
+      newPassword: Joi.string().min(8).required()
+    })
+  }
   getUser = {
     query: Joi.object({
       isAdmin: Joi.boolean()

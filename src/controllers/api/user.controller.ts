@@ -26,12 +26,17 @@ export class UserController extends BaseController {
 
   @Patch('change-pw/:id')
   async changePassword(@Param('id') id: string, @Req() req: Request) {
-    console.log(req.body, id)
-    // const isValidID = mongoose.Types.ObjectId.isValid(id)
-    // if (isValidID) {
-    //   return this.userService.findOneUser(id)
-    // } else {
-    //   throw new BadRequestException(httpFlags.INVALID_PARAM)
-    // }
+    try {
+      await this.validateRequest(req, BaseController.schemas.userSchema.changePassword)
+      const { newPassword } = req.body
+      const isValidID = mongoose.Types.ObjectId.isValid(id)
+      if (isValidID) {
+        return this.userService.changePassword(id, newPassword)
+      } else {
+        throw new BadRequestException(httpFlags.INVALID_PARAM)
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 }

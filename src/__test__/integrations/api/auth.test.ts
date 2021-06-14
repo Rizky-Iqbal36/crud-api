@@ -81,26 +81,4 @@ describe(`Authentication API`, () => {
     expect(res.status).toBe(400)
     expect(res.body.errors.flag).toBe('INVALID_BODY')
   })
-  // it(`Error => User access API should got error: User unauthorized`, async () => {
-  //   const registerUser = await request(server).post(`${url}/register`).send(payload)
-  //   const registeredUser = registerUser.body.result.data
-  //   header['x-user-id'] = registeredUser.userId
-
-  //   const res = await request(app.getHttpServer()).get(`/book/607ea12c821e76a4433ea592`).set(header).send().query({ bookmark: 'UWAUW' })
-  //   expect(res.status).toBe(401)
-  //   expect(res.body.errors.message).toBe('USER_UNAUTHORIZED')
-  // })
-
-  // it(`Error => User access API should got error: Invalid token`, async () => {
-  //   const registerUser = await request(server).post(`${url}/register`).send(payload)
-  //   const registeredUser = registerUser.body.result.data
-  //   header['x-user-id'] = registeredUser.userId
-  //   header[
-  //     'Authorization'
-  //   ] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGJhNzQ3MzE1YTgwMzA1NGEwZTJiNSIsImlhdCI6MTYxOTc2NTA5MCwiZXhwIjoxNjE5ODUxNDkwfQ.bv9Hwp4IAdLAktBa8BL4TFBpE2yWu5t8lCPKfeCVe0k`
-
-  //   const res = await request(app.getHttpServer()).get(`/book/607ea12bd21e76a4433ea592`).set(header).send().query({ bookmark: 'UWAUW' })
-  //   expect(res.status).toBe(400)
-  //   expect(res.body.errors.message).toBe('INVALID_TOKEN')
-  // })
 })

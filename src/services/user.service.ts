@@ -11,15 +11,11 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository, private readonly authService: AuthService) {}
 
   public async blockUser(id: string, setActive: boolean, setStatus: UserStatusEnum) {
-    const user = await this.userRepository.getOneUser(id)
-    if (user) {
-      user.status = setStatus
-      user.isActive = setActive
-      await user.save()
-      return user
-    } else {
-      throw new ResourceNotFoundException(httpFlags.USER_NOT_FOUND)
-    }
+    const user = await this.findOneUser(id)
+    user.status = setStatus
+    user.isActive = setActive
+    await user.save()
+    return user
   }
 
   public async deleteUser(id: string) {
@@ -70,5 +66,13 @@ export class UserService {
     const token = this.authService.generateToken(user._id)
 
     return { message: 'Login success', data: { userId: user._id, email: body.email, token } }
+  }
+
+  public async changePassword(id: string, newPassword: string) {
+    const user = await this.findOneUser(id)
+    const hashedPassword = await this.authService.hashPassword(newPassword)
+    user.password = hashedPassword
+    await user.save()
+    return user
   }
 }

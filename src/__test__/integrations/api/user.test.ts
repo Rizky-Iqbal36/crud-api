@@ -3,7 +3,9 @@ import request from 'supertest'
 import { initServerApp, stopServerApp, flushMongoDB } from '@root/__test__/utils/createApp'
 import { SeedUserData } from '@database/seeds/user.seed'
 import { validHeaders } from '@root/__test__/utils/set-header'
+import { UserRepository } from '@root/repositories/user.repository'
 import { UserStatusEnum } from '@root/interfaces/enum'
+import faker from 'faker'
 
 const header: any = validHeaders
 const url = '/user'
@@ -13,10 +15,14 @@ describe(`User API`, () => {
   let server: any
   let seedUserData: SeedUserData
 
+  let userRepository: UserRepository
+
   beforeAll(async () => {
     app = await initServerApp()
     server = app.getHttpServer()
     seedUserData = await app.get(SeedUserData)
+
+    userRepository = await app.get(UserRepository)
 
     await app.init()
   })
@@ -44,6 +50,26 @@ describe(`User API`, () => {
       isAdmin: false,
       status: 'ACTIVE'
     })
+  })
+
+  it(`Success => User should change password and login with that password`, async () => {
+    const user = await seedUserData.createOne({ admin: false })
+    header['x-user-id'] = user.userId
+    header['Authorization'] = `Bearer ${user.token}`
+
+    const beforeChange = await userRepository.getOneUser(user.userId)
+
+    const newPassword = faker.internet.password(8)
+    await request(app.getHttpServer()).patch(`${url}/change-pw/${user.userId}`).set(header).send({ newPassword })
+
+    const afterChange = await userRepository.getOneUser(user.userId)
+
+    expect(beforeChange.password).not.toBe(afterChange.password)
+
+    const res = await request(server).post(`/auth/login`).send({ email: user.email, password: newPassword })
+    expect(res.status).toBe(200)
+    expect(res.body.result.message).toBe('Login success')
+    expect(res.body.result.data).toHaveProperty('token')
   })
 
   it(`Error => User access API should got error: Invalid token`, async () => {
