@@ -20,7 +20,7 @@ export type IUserDoc = IUser & Document
 const UserSchema = new Schema(
   {
     isActive: { type: Boolean, required: true, default: true },
-    email: { type: String, required: true, unique: true, lowercase: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     userName: { type: String, required: true },
     isAdmin: { type: Boolean, required: true, default: false },

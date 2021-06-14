@@ -11,7 +11,7 @@ import mongoose from 'mongoose'
 
 @Controller('admin')
 @UseGuards(AdminGuard)
-export class UserController extends BaseController {
+export class AdminController extends BaseController {
   constructor(private readonly userService: UserService) {
     super()
   }

@@ -1,12 +1,13 @@
-import { Module } from '@nestjs/common'
+import { Module, MiddlewareConsumer } from '@nestjs/common'
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 
 import { controllers } from '@root/controllers/index'
+import { UserController } from '@root/controllers/api/user.controller'
 import { databaseProviders } from '@database/index'
 import { repositories } from '@root/repositories'
 import { services } from '@root/services'
 
-// import { UserAuthMiddleware } from '@root/authentication/middleware/auth.middleware'
+import { UserAuthMiddleware } from '@root/authentication/middleware/auth.middleware'
 
 import { HttpExceptionFilter } from '@root/app/exception/http-exception.filter'
 import ResponseInterceptor from '@root/app/utils/interceptor/response.interceptor'
@@ -20,4 +21,8 @@ import ResponseInterceptor from '@root/app/utils/interceptor/response.intercepto
     { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor }
   ]
 })
-export class AppModule {}
+export class AppModule {
+  async configure(consumer: MiddlewareConsumer) {
+    consumer.apply(UserAuthMiddleware).forRoutes(UserController)
+  }
+}

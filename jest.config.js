@@ -14,8 +14,8 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest'
   },
-  testPathIgnorePatterns: ['/node_modules/', 'src/database/*'],
-  coveragePathIgnorePatterns: ['node_modules/*', '<rootDir>/app/*', '<rootDir>/database/*', '<rootDir>/main.ts'],
+  testPathIgnorePatterns: ['/node_modules/', 'src/database/*', 'src/__test__/matcher/*', 'src/__test__/util/*'],
+  coveragePathIgnorePatterns: ['node_modules/*', '<rootDir>/app/*', '<rootDir>/database/*', '<rootDir>/__test__/matcher/*', '<rootDir>/__test__/util/*', '<rootDir>/main.ts'],
   testResultsProcessor: 'jest-sonar-reporter',
   coverageDirectory: '../coverage',
   reporters: ['default', 'jest-junit']
