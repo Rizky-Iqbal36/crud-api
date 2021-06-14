@@ -9,6 +9,11 @@ import { IUser, IUserLogin } from '@root/database/models/user.model'
 export class UserService {
   constructor(private readonly userRepository: UserRepository, private readonly authService: AuthService) {}
 
+  public async deleteUser(id: string) {
+    await this.findOneUser(id)
+    return this.userRepository.deleteOneUser(id)
+  }
+
   public async findAllUser(isAdmin?: boolean) {
     return this.userRepository.getAllUsers(isAdmin)
   }

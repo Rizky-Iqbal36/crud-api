@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common'
+import { Controller, Get, Param, Req, UseGuards, Delete } from '@nestjs/common'
 
 import { UserService } from '@root/services/user.service'
 import { BadRequestException } from '@root/app/exception/httpException'
@@ -28,6 +28,16 @@ export class AdminController extends BaseController {
     const isValidID = mongoose.Types.ObjectId.isValid(id)
     if (isValidID) {
       return this.userService.findOneUser(id)
+    } else {
+      throw new BadRequestException(httpFlags.INVALID_PARAM)
+    }
+  }
+
+  @Delete('/:id')
+  async deleteOne(@Param('id') id: string) {
+    const isValidID = mongoose.Types.ObjectId.isValid(id)
+    if (isValidID) {
+      return this.userService.deleteUser(id)
     } else {
       throw new BadRequestException(httpFlags.INVALID_PARAM)
     }
