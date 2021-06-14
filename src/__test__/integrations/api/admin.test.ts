@@ -4,6 +4,7 @@ import { initServerApp, stopServerApp, flushMongoDB } from '@root/__test__/utils
 import { SeedUserData } from '@database/seeds/user.seed'
 import { validHeaders } from '@root/__test__/utils/set-header'
 import { UserRepository } from '@root/repositories/user.repository'
+import { UserStatusEnum } from '@root/interfaces/enum'
 
 const header: any = validHeaders
 const url = '/admin'
@@ -70,6 +71,36 @@ describe(`Admin API`, () => {
     })
   })
 
+  it(`Success => Should block and unblocking a user`, async () => {
+    const user = await seedUserData.createOne({ admin: false })
+
+    let getUser = await userRepository.getOneUser(user.userId)
+    expect(getUser.isActive).toBe(true)
+    expect(getUser.status).toBe(UserStatusEnum.ACTIVE)
+    expect(user).toMatchObject({
+      userId: getUser._id,
+      email: getUser.email
+    })
+
+    const admin = await seedUserData.createOne({ admin: true })
+
+    header['x-user-id'] = admin.userId
+    header['Authorization'] = `Bearer ${admin.token}`
+
+    const res = await request(server).patch(`${url}/${user.userId}`).set(header).query({ setActive: false, setStatus: UserStatusEnum.BLOCKED }).send()
+    expect(res.status).toBe(200)
+
+    getUser = await userRepository.getOneUser(user.userId)
+    expect(getUser.isActive).toBe(false)
+    expect(getUser.status).toBe(UserStatusEnum.BLOCKED)
+
+    await request(server).patch(`${url}/${user.userId}`).set(header).query({ setActive: true, setStatus: UserStatusEnum.ACTIVE }).send()
+
+    getUser = await userRepository.getOneUser(user.userId)
+    expect(getUser.isActive).toBe(true)
+    expect(getUser.status).toBe(UserStatusEnum.ACTIVE)
+  })
+
   it(`Error => Should got error: user can't access Admin API`, async () => {
     const user = await seedUserData.createOne({ admin: false })
 
@@ -96,6 +127,26 @@ describe(`Admin API`, () => {
     header['x-user-id'] = admin.userId
     header['Authorization'] = `Bearer ${admin.token}`
     const res = await request(server).delete(`${url}/607ea12bd21e76a4433ea592`).set(header).send()
+    expect(res.status).toBe(404)
+    expect(res.body.errors.message).toBe('USER_NOT_FOUND')
+  })
+
+  it(`Error => Blocking a user should got error: Invalid param`, async () => {
+    const admin = await seedUserData.createOne({ admin: true })
+
+    header['x-user-id'] = admin.userId
+    header['Authorization'] = `Bearer ${admin.token}`
+    const res = await request(server).patch(`${url}/123`).set(header).query({ setActive: true, setStatus: UserStatusEnum.ACTIVE }).send()
+    expect(res.status).toBe(400)
+    expect(res.body.errors.message).toBe('INVALID_PARAM')
+  })
+
+  it(`Error => Blocking a user should got error: No such a user`, async () => {
+    const admin = await seedUserData.createOne({ admin: true })
+
+    header['x-user-id'] = admin.userId
+    header['Authorization'] = `Bearer ${admin.token}`
+    const res = await request(server).patch(`${url}/607ea12bd21e76a4433ea592`).set(header).query({ setActive: true, setStatus: UserStatusEnum.ACTIVE }).send()
     expect(res.status).toBe(404)
     expect(res.body.errors.message).toBe('USER_NOT_FOUND')
   })

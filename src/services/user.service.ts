@@ -4,10 +4,23 @@ import { AuthService } from '@root/authentication/service/auth.service'
 import { BadRequestException, ResourceNotFoundException } from '@root/app/exception/httpException'
 import { httpFlags } from '@root/constant/flags'
 import { IUser, IUserLogin } from '@root/database/models/user.model'
+import { UserStatusEnum } from '@root/interfaces/enum'
 
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository, private readonly authService: AuthService) {}
+
+  public async blockUser(id: string, setActive: boolean, setStatus: UserStatusEnum) {
+    const user = await this.userRepository.getOneUser(id)
+    if (user) {
+      user.status = setStatus
+      user.isActive = setActive
+      await user.save()
+      return user
+    } else {
+      throw new ResourceNotFoundException(httpFlags.USER_NOT_FOUND)
+    }
+  }
 
   public async deleteUser(id: string) {
     await this.findOneUser(id)

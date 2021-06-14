@@ -20,12 +20,6 @@ const appConfig = {
     db: process.env.MONGO_DB_DB_NAME,
     authSource: process.env.MONGO_DB_AUTH_SOURCE
   },
-  cloudinary: {
-    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-    apiKey: process.env.CLOUDINARY_API_KEY,
-    apiSecret: process.env.CLOUDINARY_API_SECRET,
-    assets: process.env.APP_ENV === 'local' ? process.env.CLOUDINARY_ASSETS + '_test' : process.env.CLOUDINARY_ASSETS
-  },
   auth: {
     jwtSecret: process.env.JWT_SECRET,
     jwtExpiration: process.env.JWT_EXPIRATION,
