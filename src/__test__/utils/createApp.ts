@@ -1,13 +1,14 @@
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { AppModule } from '@root/app.module'
+import { SeederModule } from '@database/seeds/seeder.module'
 import mongoose from 'mongoose'
 
 let app: INestApplication
 
 export const initServerApp = async () => {
   const moduleFixture = await Test.createTestingModule({
-    imports: [AppModule]
+    imports: [AppModule, SeederModule]
   }).compile()
 
   app = moduleFixture.createNestApplication()

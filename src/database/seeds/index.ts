@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common'
-import { SeedBookData } from '@database/seeds/book.seed'
+import { SeedUserData } from '@database/seeds/user.seed'
 
-export const seedFiles = [SeedBookData]
+export const seedFiles = [SeedUserData]
 
 @Injectable()
 export default class Seeds {
-  constructor(private readonly bookDataSeed: SeedBookData) {}
+  constructor(private readonly seedUserData: SeedUserData) {}
 
   async exec() {
     await this.registerSeeder()
   }
 
   private async registerSeeder() {
-    await this.bookDataSeed.createMany(10)
+    await this.seedUserData.createMany(10)
   }
 }

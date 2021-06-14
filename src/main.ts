@@ -1,10 +1,12 @@
 import { NestFactory } from '@nestjs/core'
+import ResponseInterceptor from '@root/app/utils/interceptor/response.interceptor'
 import { AppModule } from './app.module'
+import config from '@root/app/config/appConfig'
 
 async function bootstrap() {
-  const port = process.env.PORT || 3000
+  const port = config.app.port
   const app = await NestFactory.create(AppModule)
-  app.setGlobalPrefix('practice')
+  app.useGlobalInterceptors(new ResponseInterceptor())
   await app.listen(port, () => `App is running on port ${port}`)
 }
 bootstrap()
