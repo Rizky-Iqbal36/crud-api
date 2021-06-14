@@ -37,3 +37,9 @@ export class ForbiddenException extends CustomException {
     super(HttpStatus.FORBIDDEN, flag, message, options)
   }
 }
+
+export class ResourceNotFoundException extends CustomException {
+  constructor(flag: any, message?: string, options?: IHttpExceptionOptions) {
+    super(HttpStatus.NOT_FOUND, flag, message, options)
+  }
+}

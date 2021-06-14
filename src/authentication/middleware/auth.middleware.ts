@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { NestMiddleware, Injectable } from '@nestjs/common'
-import { UnauthorizedException, BadRequestException, ForbiddenException } from '@app/exception/httpException'
+import { UnauthorizedException, BadRequestException, ForbiddenException, ResourceNotFoundException } from '@app/exception/httpException'
 import { httpFlags } from '@root/constant/flags'
 import { AuthService } from '@root/authentication/service/auth.service'
 import { UserRepository } from '@root/repositories/user.repository'
@@ -13,8 +13,9 @@ export class UserAuthMiddleware implements NestMiddleware {
     if (!userId) throw new ForbiddenException(httpFlags.FORBIDDEN)
 
     const userData = await this.userRepository.getOneUser(userId)
-    if (!userData) throw new ForbiddenException(httpFlags.USER_NOT_FOUND)
-    if (!userData.isActive) throw new BadRequestException(httpFlags.USER_BLOCKED)
+
+    if (!userData) throw new ResourceNotFoundException(httpFlags.USER_NOT_FOUND)
+    if (!userData.isActive) throw new ForbiddenException(httpFlags.USER_BLOCKED)
 
     const authorization = req.header('authorization')
     const token = authorization?.replace('Bearer ', '')

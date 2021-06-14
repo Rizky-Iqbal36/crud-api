@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { UserRepository } from '@root/repositories/user.repository'
 import { AuthService } from '@root/authentication/service/auth.service'
-import { BadRequestException } from '@root/app/exception/httpException'
+import { BadRequestException, ResourceNotFoundException } from '@root/app/exception/httpException'
 import { httpFlags } from '@root/constant/flags'
 import { IUser, IUserLogin } from '@root/database/models/user.model'
 
@@ -18,7 +18,7 @@ export class UserService {
     if (user) {
       return user
     } else {
-      throw new BadRequestException(httpFlags.USER_NOT_FOUND)
+      throw new ResourceNotFoundException(httpFlags.USER_NOT_FOUND)
     }
   }
 

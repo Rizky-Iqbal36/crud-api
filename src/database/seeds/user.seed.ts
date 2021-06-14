@@ -2,6 +2,7 @@ import faker from 'faker'
 import { Injectable } from '@nestjs/common'
 import { UserRepository } from '@root/repositories/user.repository'
 import { AuthService } from '@root/authentication/service/auth.service'
+import { UserStatusEnum } from '@root/interfaces/enum'
 
 @Injectable()
 export class SeedUserData {
@@ -14,7 +15,7 @@ export class SeedUserData {
     return all
   }
 
-  async createOne({ admin = false }: { admin?: boolean }) {
+  async createOne({ admin = false, active = true, userStatus = UserStatusEnum.ACTIVE }: { admin?: boolean; active?: boolean; userStatus?: UserStatusEnum }) {
     const email = faker.internet.email()
     const password = faker.internet.password(8)
     const hashedPassword = await this.authService.hashPassword(password)
@@ -22,7 +23,9 @@ export class SeedUserData {
       email,
       password: hashedPassword,
       userName: faker.internet.userName(),
-      isAdmin: admin || false
+      isAdmin: admin || false,
+      status: userStatus || UserStatusEnum.ACTIVE,
+      isActive: active
     })
     const token = await this.authService.generateToken(data._id)
     return {
