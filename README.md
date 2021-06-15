@@ -202,6 +202,13 @@ whoam@i$ kubectl get secret
  - see [user.schema.ts](src/schema/requestvalidators/user.schema.ts) to check required body for post/patch method
  ![screnshoot-4](screenshoots/screnshoot-4.png)
 
+## CI/CD
+| Job Name  |                                   Description                                                 |
+| --------- | :-------------------------------------------------------------------------------------------: |
+| Test      |                                 Integration test                                              |
+| Docker    |   Build and push this app's image to my [docker hub](https://hub.docker.com/u/rizkyiqbal)     |
+| Deploy    |                              Deploy this app to heroku                                        |
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
