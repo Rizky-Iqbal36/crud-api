@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crud-service
+  template:
+    metadata:
+      labels:
+        app: crud-service
+    spec:
+      containers:
+        - name: crud-api
+          image: rizkyiqbal/crud-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crud-service
+spec:
+  type: NodePort
+  selector:
+    app: crud-service
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30001

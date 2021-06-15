@@ -1,10 +1,10 @@
 {
-  "name": "practice-project",
+  "name": "crud-api",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "rizkyiqbal",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT LICENSE",
   "scripts": {
     "dependency:local": "docker-compose up -d database",
     "prebuild": "rimraf dist",
