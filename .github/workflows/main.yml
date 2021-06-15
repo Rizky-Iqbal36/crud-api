@@ -9,13 +9,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check Out Repo
-        uses: actions/checkout@v2
-
   test:
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +23,10 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v2
       - run: cp .env.example .env
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -54,3 +50,23 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP}}
+          heroku_email: 'rizkiiqbal36@gmail.com'
+        env:
+          HD_APP_ENV: ${{ secrets.APP_ENV }}
+          HD_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          HD_ENCRYPT_JWT_SECRET: ${{ secrets.ENCRYPT_JWT_SECRET }}
+          HD_JWT_EXPIRATION: ${{ secrets.JWT_EXPIRATION }}
+          HD_MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+          HD_MONGO_DB_DB_NAME: ${{ secrets.MONGO_DB_DB_NAME }}
+          HD_MONGO_DB_USER: ${{ secrets.MONGO_DB_USER }}
+          HD_MONGO_DB_PASS: ${{ secrets.MONGO_DB_PASS }}
+          HD_MONGO_DB_AUTH_SOURCE: ${{ secrets.MONGO_DB_AUTH_SOURCE }}
