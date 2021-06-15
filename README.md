@@ -235,3 +235,11 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 This project is [MIT licensed](LICENSE).
+
+## Author's Note
+
+if you like this project, then you may also like the following projects: <br />
+- [NestJs-boilerplate](https://github.com/Rizky-Iqbal36/NestJs-boilerplate)
+- [kubernetesDockerNodeMongo](https://github.com/Rizky-Iqbal36/kubernetesDockerNodeMongo)
+- [Library_Backend](https://github.com/Rizky-Iqbal36/Library_Backend)
+- [dind-nodejs](https://github.com/Rizky-Iqbal36/dind-nodejs)
