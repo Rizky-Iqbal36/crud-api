@@ -189,7 +189,7 @@ whoam@i$ kubectl get secret
  - You can see this project's image on this [link](https://hub.docker.com/repository/docker/rizkyiqbal/crud-api)
  - by default this image is set to connect to mongodb statefulset on kubernetes, but you can set it to connect to localhost by build and set the APP_ENV
     ```bash
-      whoam@i$ docker build -t rizkyiqbal/library-backend --build-arg APP_ENV=local .
+      whoam@i$ docker build -t rizkyiqbal/crud-api --build-arg APP_ENV=local .
     ```
  - please see [.env.example](.env.example), [Dockerfile](Dockerfile) and [appConfig.js](src/app/config/appConfig.ts) for more details 
 
@@ -198,6 +198,7 @@ whoam@i$ kubectl get secret
  This project is live on [https://iqbal-crud-api.herokuapp.com/](https://iqbal-crud-api.herokuapp.com/health) <br />
  Note :
  - please see the [endpoint list](#endpoint-list)
+ - header["x-user-id"] is required,so please fill it with the value of user._id
  - see [user.schema.ts](src/schema/requestvalidators/user.schema.ts) to check required body for post/patch method
  ![screnshoot-4](screenshoots/screnshoot-4.png)
 
