@@ -193,6 +193,13 @@ whoam@i$ kubectl get secret
     ```
  - please see [.env.example](.env.example), [Dockerfile](Dockerfile) and [appConfig.js](src/app/config/appConfig.ts) for more details 
 
+## CI/CD
+| Job Name  |                                   Description                                                 |
+| --------- | :-------------------------------------------------------------------------------------------: |
+| Test      |                                 Integration test                                              |
+| Docker    |   Build and push this app's image to my [docker hub](https://hub.docker.com/u/rizkyiqbal)     |
+| Deploy    |                              Deploy this app to heroku                                        |
+
 ## Deployment 
 
  This project is live on [https://iqbal-crud-api.herokuapp.com/](https://iqbal-crud-api.herokuapp.com/health) <br />
@@ -202,12 +209,15 @@ whoam@i$ kubectl get secret
  - see [user.schema.ts](src/schema/requestvalidators/user.schema.ts) to check required body for post/patch method
  ![screnshoot-4](screenshoots/screnshoot-4.png)
 
-## CI/CD
-| Job Name  |                                   Description                                                 |
-| --------- | :-------------------------------------------------------------------------------------------: |
-| Test      |                                 Integration test                                              |
-| Docker    |   Build and push this app's image to my [docker hub](https://hub.docker.com/u/rizkyiqbal)     |
-| Deploy    |                              Deploy this app to heroku                                        |
+ ### Step by Step to access this server using postman
+ - Register a user using this endpoint https://iqbal-crud-api.herokuapp.com/auth/register with POST method
+  ![screnshoot-5](screenshoots/screnshoot-5.png)
+ - Add header key `x-user-id` with the value of userId
+  ![screnshoot-6](screenshoots/screnshoot-6.png)
+ - Set auth type to `Bearer Token` and token value of the token you just got when register
+  ![screnshoot-7](screenshoots/screnshoot-7.png)
+ - Now you can access `USER API`
+  ![screnshoot-8](screenshoots/screnshoot-8.png)
 
 ## Support
 
