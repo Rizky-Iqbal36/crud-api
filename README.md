@@ -25,20 +25,6 @@ $ cp .env.example .env
 $ npm run dependency:local
 ```
 
-## Endpoint List
-
-| Methode |      Endpoint       |        API |
-| ------- | :-----------------: | ---------: |
-| GET     |       /health       | Health API |
-| POST    |   /auth/register    |   Auth API |
-| POST    |     /auth/login     |   Auth API |
-| GET     |  /admin/get-users   |  Admin API |
-| GET     | /admin/get-user/:id |  Admin API |
-| DELETE  |     /admin/:id      |  Admin API |
-| PATCH   |     /admin/:id      |  Admin API |
-| GET     |      /user/:id      |   User Api |
-| PATCH   | /user/change-pw/:id |   User APi |
-
 ## Running the app
 
 Note: Finish Installation first
@@ -92,6 +78,20 @@ if you want to run the test locally, finish the Installation first and run the c
 # integration tests
 $ npm run test
 ```
+
+## Endpoint List
+
+| Methode |      Endpoint       |        API |
+| ------- | :-----------------: | ---------: |
+| GET     |       /health       | Health API |
+| POST    |   /auth/register    |   Auth API |
+| POST    |     /auth/login     |   Auth API |
+| GET     |  /admin/get-users   |  Admin API |
+| GET     | /admin/get-user/:id |  Admin API |
+| DELETE  |     /admin/:id      |  Admin API |
+| PATCH   |     /admin/:id      |  Admin API |
+| GET     |      /user/:id      |   User Api |
+| PATCH   | /user/change-pw/:id |   User APi |
 
 ## Support
 
