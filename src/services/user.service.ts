@@ -20,7 +20,10 @@ export class UserService {
 
   public async deleteUser(id: string) {
     await this.findOneUser(id)
-    return this.userRepository.deleteOneUser(id)
+    await this.userRepository.deleteOneUser(id)
+    return {
+      message: `User with id: ${id} has successfully deleted`
+    }
   }
 
   public async findAllUser(isAdmin?: boolean) {

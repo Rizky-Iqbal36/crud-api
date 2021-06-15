@@ -53,10 +53,12 @@ $ npm run start:dev
 
 ## Test
 
-Note: Finish Installation first
+You can see the test case on github action instead <br />
+
+if you want to run the test locally, finish the Installation first and run the command bellow
 
 ```bash
-# unit tests
+# integration tests
 $ npm run test
 ```
 

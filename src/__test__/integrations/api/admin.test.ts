@@ -62,6 +62,7 @@ describe(`Admin API`, () => {
     header['Authorization'] = `Bearer ${admin.token}`
     const res = await request(server).delete(`${url}/${user.userId}`).set(header).send()
     expect(res.status).toBe(200)
+    expect(res.body.result.message).toBe(`User with id: ${user.userId} has successfully deleted`)
 
     getUsers = await userRepository.getAllUsers()
     expect(getUsers.length).toBe(1)
