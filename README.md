@@ -93,6 +93,89 @@ $ npm run test
 | GET     |      /user/:id      |   User Api |
 | PATCH   | /user/change-pw/:id |   User APi |
 
+## Kubernetes
+
+### Statefulset MongoDB (Replica Set)
+
+secure your mongodb keyfile: <br />
+
+```console
+whoam@i$ openssl rand -base64 741 > resources/secret/mongodb-keyfile
+```
+
+create kubernetes secret with the mongodb keyfile you just create: <br />
+
+```console
+whoam@i$ kubectl create secret generic mongo-key --from-file=resources/secret/mongodb-keyfile
+```
+
+check the mongo-key secret:
+
+```console
+whoam@i$ kubectl get secret
+```
+
+- now you R ready to apply resources/kubernetes/mongodb-statefulset.yaml
+  ```console
+  whoam@i$ kubectl apply -f resources/kubernetes/mongodb-statefulset.yaml
+  ```
+- wait until all the 3 pods R running
+  ![screnshoot-1](screenshoots/screnshoot-1.png)
+- define replica set in mongo bash in the running pod
+  - by execute:
+    ```bash
+    whoam@i$ kubectl exec -it mongod-0 -- bash
+    # you can acces the pod bash
+    ```
+  - in pod bash, login to mongo, by execute:
+    ```bash
+      whoam@i$ mongo -u root -p developer
+    ```
+  - execute this command to make your own replica set with your own host
+    ```bash
+    rs.initiate({
+      _id: 'MainRepSet',
+      version: 1,
+      members: [
+        { _id: 0, host: 'mongod-0.mongodb-service:27017' },
+        { _id: 1, host: 'mongod-1.mongodb-service:27017' },
+        { _id: 2, host: 'mongod-2.mongodb-service:27017' }
+      ]
+    })
+    ```
+  - rs.status() to see if there is primary replica set, it will look similiar like this:
+    ```json
+      "members" : [
+          {
+            "_id" : 0,
+            "name" : "mongod-0.mongodb-service:27017",
+            ...
+            "stateStr" : "PRIMARY",
+            ...
+          },
+          {
+            "_id" : 1,
+            "name" : "mongod-1.mongodb-service:27017",
+            ...
+            "stateStr" : "SECONDARY",
+            ...
+            "syncSourceHost" : "mongod-0.mongodb-service:27017",
+            ...
+          },
+          {
+            "_id" : 2,
+            "name" : "mongod-2.mongodb-service:27017",
+            ...
+            "stateStr" : "SECONDARY",
+            ...
+            "syncSourceHost" : "mongod-0.mongodb-service:27017",
+            ...
+          }
+        ],
+    ```
+  - if not, exec "rs.slaveOk() || rs.secondaryOk()" to make host mongod-0.mongodb-service:27017 as primary
+    - it's depend on which pod you are accessing the mongo bash
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).

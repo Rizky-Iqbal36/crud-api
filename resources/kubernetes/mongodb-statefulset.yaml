@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  labels:
+    name: mongo
+spec:
+  clusterIP: None
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    role: mongo
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongod
+spec:
+  serviceName: mongodb-service
+  replicas: 3
+  selector:
+    matchLabels:
+      role: mongo
+  template:
+    metadata:
+      labels:
+        role: mongo
+        environment: test
+        replicaset: MainRepSet
+    spec:
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: mongo-key
+          secret:
+            defaultMode: 0400
+            secretName: mongo-key
+      containers:
+        - name: mongod-container
+          image: mongo
+          command:
+            - /bin/sh
+            - -c
+            - >
+              if [ -f /data/db/admin-user.lock ]; then
+                mongod --bind_ip 0.0.0.0 --replSet MainRepSet --clusterAuthMode keyFile --keyFile /etc/secrets-volume/mongodb-keyfile --setParameter authenticationMechanisms=SCRAM-SHA-1;
+              else
+                mongod --auth;
+              fi;
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - >
+                    if [ ! -f /data/db/admin-user.lock ]; then
+                      sleep 5;
+                      touch /data/db/admin-user.lock
+                      if [ "$HOSTNAME" = "mongod-0" ]; then
+                        mongo --eval 'db = db.getSiblingDB("admin"); db.createUser({ user: "root", pwd: "developer", roles: [ "userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase", "clusterAdmin"]});';
+                      fi;
+                      mongod --shutdown;
+                    fi;
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongodb-persistent-storage-claim
+              mountPath: /data/db
+            - name: mongo-key
+              mountPath: '/etc/secrets-volume'
+              readOnly: true
+  volumeClaimTemplates:
+    - metadata:
+        name: mongodb-persistent-storage-claim
+        annotations:
+          volume.beta.kubernetes.io/storage-class: 'hostpath' #default storageclass
+      spec:
+        accessModes: ['ReadWriteOnce']
+        resources:
+          requests:
+            storage: 1Gi

@@ -13,6 +13,7 @@ const appConfig = {
     uri: () => {
       if (process.env.APP_ENV === 'local') return process.env.MONGO_DB_URI + 'localhost'
       else if (process.env.APP_ENV === 'test') return process.env.MONGO_DB_URI + 'database'
+      else if (process.env.APP_ENV === 'kubectl') return process.env.MONGO_DB_URI + process.env.MONGO_STATEFULSET_HOST
       else return process.env.MONGO_DB_URI
     },
     user: process.env.MONGO_DB_USER,

@@ -1,6 +1,6 @@
 FROM node:12-alpine
 
-ARG APP_ENV=container
+ARG APP_ENV=kubectl
 ENV APP_ENV=${APP_ENV}
 
 RUN mkdir /app

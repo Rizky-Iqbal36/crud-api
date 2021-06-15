@@ -39,3 +39,6 @@ junit.xml
 
 # Sonarqube
 .scannerwork
+
+# Ssl
+/resources/secret/mongodb-keyfile
