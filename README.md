@@ -183,15 +183,15 @@ whoam@i$ kubectl get secret
     ![screnshoot-3](screenshoots/screnshoot-3.png)
   - Done, the application is running on port 30001
     ![screnshoot-2](screenshoots/screnshoot-2.png)
-    
+
 ## Docker 
 
-You can see this project's image on this [link](https://hub.docker.com/repository/docker/rizkyiqbal/crud-api) <br />
-by default this image is set to connect to mongodb statefulset on kubernetes, but you can set it to connect to localhost by build and set the APP_ENV <br />
+ - You can see this project's image on this [link](https://hub.docker.com/repository/docker/rizkyiqbal/crud-api)
+ - by default this image is set to connect to mongodb statefulset on kubernetes, but you can set it to connect to localhost by build and set the APP_ENV
     ```bash
-      docker build -t rizkyiqbal/library-backend --build-arg APP_ENV=local .
+      whoam@i$ docker build -t rizkyiqbal/library-backend --build-arg APP_ENV=local .
     ```
-<br />please see [.env.example](.env.example), [Dockerfile](Dockerfile) and [appConfig.js](src/app/config/appConfig.ts) for more details 
+ - please see [.env.example](.env.example), [Dockerfile](Dockerfile) and [appConfig.js](src/app/config/appConfig.ts) for more details 
 
 ## Support
 

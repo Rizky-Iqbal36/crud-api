@@ -15,6 +15,22 @@ jobs:
     steps:
       - name: Check Out Repo
         uses: actions/checkout@v2
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run Tests
+        run: |
+          cp .env.example .env
+          npm install
+          npm run dependency:local
+          sleep 5
+          npm run test
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
       - run: cp .env.example .env
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -38,15 +54,3 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Run Tests
-        run: |
-          cp .env.example .env
-          npm install
-          npm run dependency:local
-          sleep 5
-          npm run test
