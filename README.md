@@ -5,7 +5,7 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-<p align="center">This project was built using <a href="https://nestjs.com/" target="_blank">Nest.js</a>, a <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications. under the hood nestjs is using expressjs</p>
+<p align="center">This project was built using <a href="https://nestjs.com/" target="_blank">Nest.js</a>, a <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications. under the hood nestjs is using expressjs, nest also support both typescript and javascript</p>
 
 ## Description
 
@@ -192,6 +192,13 @@ whoam@i$ kubectl get secret
       whoam@i$ docker build -t rizkyiqbal/library-backend --build-arg APP_ENV=local .
     ```
  - please see [.env.example](.env.example), [Dockerfile](Dockerfile) and [appConfig.js](src/app/config/appConfig.ts) for more details 
+
+## Deployment 
+
+ This project is live on [https://iqbal-crud-api.herokuapp.com/](https://iqbal-crud-api.herokuapp.com/health) <br />
+ Note :
+ - please see the [endpoint list](#endpoint-list)
+ ![screnshoot-4](screenshoots/screnshoot-4.png)
 
 ## Support
 
