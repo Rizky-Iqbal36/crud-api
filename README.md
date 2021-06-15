@@ -198,6 +198,7 @@ whoam@i$ kubectl get secret
  This project is live on [https://iqbal-crud-api.herokuapp.com/](https://iqbal-crud-api.herokuapp.com/health) <br />
  Note :
  - please see the [endpoint list](#endpoint-list)
+ - see [user.schema.ts](src/schema/requestvalidators/user.schema.ts) to check required body for post/patch method
  ![screnshoot-4](screenshoots/screnshoot-4.png)
 
 ## Support
