@@ -55,6 +55,37 @@ $ npm run start:dev
 
 You can see the test case on github action instead <br />
 
+### Test Case List
+
+- `User API`
+  - Success => Should get a user
+  - Success => User should change password and login with that password
+  - Error => User access API should got error: Invalid token
+  - Error => User access API should got error: Invalid token => authorization not set
+  - Error => User access API should got error: Forbidden
+  - Error => User access API should got error: User not found
+  - Error => User access API should got error: User blocked
+  - Error => Get user data should got error: No such a user
+  - Error => Get user data should got error: Invalid param
+- `Authentication API`
+  - Success => Should register a user and return a token
+  - Success => Should login a user and return a token
+  - Error => login a user should got error: Wrong password or email
+  - Error => Register a user should got error: Email already exist
+  - Error => Register a user should got error: Invalid body
+  - Error => Register a user should got error: Invalid body => Payload isAdmin === true
+- `Admin API`
+  - Success => Should get many user
+  - Success => Should delete a user
+  - Success => Should block and unblocking a user
+  - Error => Should got error: user can't access Admin API
+  - Error => Delete a user should got error: Invalid param
+  - Error => Delete a user should got error: No such a user
+  - Error => Blocking a user should got error: Invalid param
+  - Error => Blocking a user should got error: No such a user
+- `Health API`
+  - should hit health check endpoint
+
 if you want to run the test locally, finish the Installation first and run the command bellow
 
 ```bash
