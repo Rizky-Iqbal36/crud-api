@@ -124,7 +124,7 @@ check pvc:
   kubectl get pvc
 ```
 
-![screnshoot-9](screenshoots/screnshoot-9.png)
+![screnshoot-10](screenshoots/screnshoot-10.png)
 
 - now you R ready to apply resources/kubernetes/mongodb-statefulset.yaml
   ```console
