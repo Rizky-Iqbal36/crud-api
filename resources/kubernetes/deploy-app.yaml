@@ -15,7 +15,6 @@ spec:
       containers:
         - name: crud-api
           image: rizkyiqbal/crud-api
-          command: ['npm', 'run', 'seeder']
 ---
 apiVersion: v1
 kind: Service
