@@ -18,7 +18,6 @@ This project is using [this](https://github.com/Rizky-Iqbal36/NestJs-boilerplate
 $ npm install
 
 # get env variable
-
 $ cp .env.example .env
 
 # start service
@@ -118,7 +117,13 @@ check the mongo-key secret:
 
 ![screnshoot-9](screenshoots/screnshoot-9.png)
 
-check pvc:
+- now you R ready to apply resources/kubernetes/mongodb-statefulset.yaml
+  ```console
+    kubectl apply -f resources/kubernetes/mongodb-statefulset.yaml
+  ```
+- wait until all the 3 pods R running
+  ![screnshoot-1](screenshoots/screnshoot-1.png)
+- check pvc:
 
 ```console
   kubectl get pvc
@@ -126,12 +131,6 @@ check pvc:
 
 ![screnshoot-10](screenshoots/screnshoot-10.png)
 
-- now you R ready to apply resources/kubernetes/mongodb-statefulset.yaml
-  ```console
-    kubectl apply -f resources/kubernetes/mongodb-statefulset.yaml
-  ```
-- wait until all the 3 pods R running
-  ![screnshoot-1](screenshoots/screnshoot-1.png)
 - define replica set in mongo bash in the running pod
 
   - by execute:
