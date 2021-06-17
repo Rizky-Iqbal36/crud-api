@@ -133,6 +133,7 @@ check pvc:
 - wait until all the 3 pods R running
   ![screnshoot-1](screenshoots/screnshoot-1.png)
 - define replica set in mongo bash in the running pod
+
   - by execute:
     ```bash
       kubectl exec -it mongod-0 -- bash
@@ -184,8 +185,14 @@ check pvc:
           }
         ],
     ```
-  - if not, exec "rs.slaveOk() || rs.secondaryOk()" to make host mongod-0.mongodb-service:27017 as primary
+  - if not, exec this command bellow to make host mongod-0.mongodb-service:27017 as primary
+
+    ```bash
+      rs.secondaryOk()
+    ```
+
     - it's depend on which pod you are accessing the mongo bash
+
   - after that you can run this application on kubernetes:
     ```bash
       kubectl apply -f resources/kubernetes/deploy-app.yaml
