@@ -49,8 +49,8 @@ You can see the test case on github action instead <br />
   - Error => User access API should got error: Invalid token
   - Error => User access API should got error: Invalid token => authorization not set
   - Error => User access API should got error: Forbidden
-  - Error => User access API should got error: User not found
   - Error => User access API should got error: User blocked
+  - Error => Get user data should got error: User can't get other user's data
   - Error => Get user data should got error: No such a user
   - Error => Get user data should got error: Invalid param
 - `Authentication API`

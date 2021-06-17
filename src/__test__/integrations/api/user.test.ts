@@ -123,14 +123,14 @@ describe(`User API`, () => {
     expect(res.body.errors.message).toBe('USER_BLOCKED')
   })
 
-  it(`Error => Get user data should got error: No such a user`, async () => {
+  it(`Error => Get user data should got error: User can't see other user's data`, async () => {
     const user = await seedUserData.createOne({ admin: false })
     header['x-user-id'] = user.userId
     header['Authorization'] = `Bearer ${user.token}`
 
     const res = await request(server).get(`${url}/607ea12bd21e76a4433ea592`).set(header).send()
-    expect(res.status).toBe(404)
-    expect(res.body.errors.message).toBe('USER_NOT_FOUND')
+    expect(res.status).toBe(401)
+    expect(res.body.errors.flag).toBe('UNAUTHORIZED')
   })
 
   it(`Error => Get user data should got error: Invalid param`, async () => {
