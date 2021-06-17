@@ -81,17 +81,17 @@ $ npm run test
 
 ## Endpoint List
 
-| Methode |      Endpoint       |        API |
-| ------- | :-----------------: | ---------: |
-| GET     |       /health       | Health API |
-| POST    |   /auth/register    |   Auth API |
-| POST    |     /auth/login     |   Auth API |
-| GET     |  /admin/get-users   |  Admin API |
-| GET     | /admin/get-user/:id |  Admin API |
-| DELETE  |     /admin/:id      |  Admin API |
-| PATCH   |     /admin/:id      |  Admin API |
-| GET     |      /user/:id      |   User Api |
-| PATCH   | /user/change-pw/:id |   User APi |
+| Methode |      Endpoint       |    API     |                Description |
+| ------- | :-----------------: | :--------: | -------------------------: |
+| GET     |       /health       | Health API |               Check server |
+| POST    |   /auth/register    |  Auth API  |              User register |
+| POST    |     /auth/login     |  Auth API  |                 User Login |
+| GET     |  /admin/get-users   | Admin API  |        Admin get all users |
+| GET     | /admin/get-user/:id | Admin API  |           Admin get a user |
+| DELETE  |     /admin/:id      | Admin API  |        Admin delete a user |
+| PATCH   |     /admin/:id      | Admin API  | Admin block/unblock a user |
+| GET     |      /user/:id      |  User Api  |      User get his/her data |
+| PATCH   | /user/change-pw/:id |  User APi  |       User change password |
 
 ## Kubernetes
 
@@ -175,7 +175,7 @@ whoam@i$ kubectl get secret
     ```
   - if not, exec "rs.slaveOk() || rs.secondaryOk()" to make host mongod-0.mongodb-service:27017 as primary
     - it's depend on which pod you are accessing the mongo bash
-  - after that you can run this application on kubernetes: 
+  - after that you can run this application on kubernetes:
     ```bash
       whoam@i$ kubectl apply -f resources/kubernetes/deploy-app.yaml
     ```
@@ -184,39 +184,42 @@ whoam@i$ kubectl get secret
   - Done, the application is running on port 30001
     ![screnshoot-2](screenshoots/screnshoot-2.png)
 
-## Docker 
+## Docker
 
- - You can see this project's image on this [link](https://hub.docker.com/repository/docker/rizkyiqbal/crud-api)
- - by default this image is set to connect to mongodb statefulset on kubernetes, but you can set it to connect to localhost by build and set the APP_ENV
-    ```bash
-      whoam@i$ docker build -t rizkyiqbal/crud-api --build-arg APP_ENV=local .
-    ```
- - please see [.env.example](.env.example), [Dockerfile](Dockerfile) and [appConfig.js](src/app/config/appConfig.ts) for more details 
+- You can see this project's image on this [link](https://hub.docker.com/repository/docker/rizkyiqbal/crud-api)
+- by default this image is set to connect to mongodb statefulset on kubernetes, but you can set it to connect to localhost by build and set the APP_ENV
+  ```bash
+    whoam@i$ docker build -t rizkyiqbal/crud-api --build-arg APP_ENV=local .
+  ```
+- please see [.env.example](.env.example), [Dockerfile](Dockerfile) and [appConfig.js](src/app/config/appConfig.ts) for more details
 
 ## CI/CD
-| Job Name  |                                   Description                                                 |
-| --------- | :-------------------------------------------------------------------------------------------: |
-| Test      |                                 Integration test                                              |
-| Docker    |   Build and push this app's image to my [docker hub](https://hub.docker.com/u/rizkyiqbal)     |
-| Deploy    |                              Deploy this app to heroku                                        |
 
-## Deployment 
+| Job Name |                                       Description                                       |
+| -------- | :-------------------------------------------------------------------------------------: |
+| Test     |                                    Integration test                                     |
+| Docker   | Build and push this app's image to my [docker hub](https://hub.docker.com/u/rizkyiqbal) |
+| Deploy   |                                Deploy this app to heroku                                |
 
- This project is live on [https://iqbal-crud-api.herokuapp.com/](https://iqbal-crud-api.herokuapp.com/health) <br />
- Note :
- - please see the [endpoint list](#endpoint-list)
- - header["x-user-id"] is required,so please fill it with the value of user._id
- - see [user.schema.ts](src/schema/requestvalidators/user.schema.ts) to check required body for post/patch method
- ![screnshoot-4](screenshoots/screnshoot-4.png)
+## Deployment
 
- ### Step by Step to access this server using postman
- - Register a user using this endpoint https://iqbal-crud-api.herokuapp.com/auth/register with POST method
+This project is live on [https://iqbal-crud-api.herokuapp.com/](https://iqbal-crud-api.herokuapp.com/health) <br />
+Note :
+
+- please see the [endpoint list](#endpoint-list)
+- header["x-user-id"] is required,so please fill it with the value of user.\_id
+- see [user.schema.ts](src/schema/requestvalidators/user.schema.ts) to check required body for post/patch method
+  ![screnshoot-4](screenshoots/screnshoot-4.png)
+
+### Step by Step to access this server using postman
+
+- Register a user using this endpoint https://iqbal-crud-api.herokuapp.com/auth/register with POST method
   ![screnshoot-5](screenshoots/screnshoot-5.png)
- - Add header key `x-user-id` with the value of userId
+- Add header key `x-user-id` with the value of userId
   ![screnshoot-6](screenshoots/screnshoot-6.png)
- - Set auth type to `Bearer Token` and token value of the token you just got when register
+- Set auth type to `Bearer Token` and token value of the token you just got when register
   ![screnshoot-7](screenshoots/screnshoot-7.png)
- - Now you can access `USER API`
+- Now you can access `USER API`
   ![screnshoot-8](screenshoots/screnshoot-8.png)
 
 ## Support
@@ -239,6 +242,7 @@ This project is [MIT licensed](LICENSE).
 ## Author's Note
 
 if you like this project, then you may also like the following projects: <br />
+
 - [NestJs-boilerplate](https://github.com/Rizky-Iqbal36/NestJs-boilerplate)
 - [kubernetesDockerNodeMongo](https://github.com/Rizky-Iqbal36/kubernetesDockerNodeMongo)
 - [Library_Backend](https://github.com/Rizky-Iqbal36/Library_Backend)
