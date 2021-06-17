@@ -200,6 +200,13 @@ check the mongo-key secret:
     ![screnshoot-3](screenshoots/screnshoot-3.png)
   - Done, the application is running on port 30001
     ![screnshoot-2](screenshoots/screnshoot-2.png)
+  - Admin, credentials:
+    ```json
+    {
+      "email": "admin@admin.com",
+      "password": "lumosmaxima"
+    }
+    ```
 
 ## Docker
 

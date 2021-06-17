@@ -15,9 +15,19 @@ export class SeedUserData {
     return all
   }
 
-  async createOne({ admin = false, active = true, userStatus = UserStatusEnum.ACTIVE }: { admin?: boolean; active?: boolean; userStatus?: UserStatusEnum }) {
-    const email = faker.internet.email()
-    const password = faker.internet.password(8)
+  async createOne({
+    email = faker.internet.email(),
+    password = faker.internet.password(8),
+    admin = false,
+    active = true,
+    userStatus = UserStatusEnum.ACTIVE
+  }: {
+    email?: string
+    password?: string
+    admin?: boolean
+    active?: boolean
+    userStatus?: UserStatusEnum
+  }) {
     const hashedPassword = await this.authService.hashPassword(password)
     const data = await this.userRepository.createUser({
       email,
