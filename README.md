@@ -98,38 +98,49 @@ $ npm run test
 ### Statefulset MongoDB (Replica Set)
 
 secure your mongodb keyfile: <br />
+make folder `secret` inside folder `resources` and execute this command <br />
 
 ```console
-whoam@i$ openssl rand -base64 741 > resources/secret/mongodb-keyfile
+  openssl rand -base64 741 > resources/secret/mongodb-keyfile
 ```
 
 create kubernetes secret with the mongodb keyfile you just create: <br />
 
 ```console
-whoam@i$ kubectl create secret generic mongo-key --from-file=resources/secret/mongodb-keyfile
+  kubectl create secret generic mongo-key --from-file=resources/secret/mongodb-keyfile
 ```
 
 check the mongo-key secret:
 
 ```console
-whoam@i$ kubectl get secret
+  kubectl get secret
 ```
+
+![screnshoot-9](screenshoots/screnshoot-9.png)
+
+check pvc:
+
+```console
+  kubectl get pvc
+```
+
+![screnshoot-9](screenshoots/screnshoot-9.png)
 
 - now you R ready to apply resources/kubernetes/mongodb-statefulset.yaml
   ```console
-  whoam@i$ kubectl apply -f resources/kubernetes/mongodb-statefulset.yaml
+    kubectl apply -f resources/kubernetes/mongodb-statefulset.yaml
   ```
 - wait until all the 3 pods R running
   ![screnshoot-1](screenshoots/screnshoot-1.png)
 - define replica set in mongo bash in the running pod
   - by execute:
     ```bash
-    whoam@i$ kubectl exec -it mongod-0 -- bash
+      kubectl exec -it mongod-0 -- bash
     # now you can acces the pod bash
     ```
   - in pod bash, login to mongo, by execute:
     ```bash
-      whoam@i$ mongo -u root -p developer
+      mongo -u root -p developer
     ```
   - execute this command to make your own replica set with your own host
     ```bash
@@ -177,7 +188,7 @@ whoam@i$ kubectl get secret
     - it's depend on which pod you are accessing the mongo bash
   - after that you can run this application on kubernetes:
     ```bash
-      whoam@i$ kubectl apply -f resources/kubernetes/deploy-app.yaml
+      kubectl apply -f resources/kubernetes/deploy-app.yaml
     ```
   - wait until this app's pod is running
     ![screnshoot-3](screenshoots/screnshoot-3.png)
@@ -189,7 +200,7 @@ whoam@i$ kubectl get secret
 - You can see this project's image on this [link](https://hub.docker.com/repository/docker/rizkyiqbal/crud-api)
 - by default this image is set to connect to mongodb statefulset on kubernetes, but you can set it to connect to localhost by build and set the APP_ENV
   ```bash
-    whoam@i$ docker build -t rizkyiqbal/crud-api --build-arg APP_ENV=local .
+    docker build -t rizkyiqbal/crud-api --build-arg APP_ENV=local .
   ```
 - please see [.env.example](.env.example), [Dockerfile](Dockerfile) and [appConfig.js](src/app/config/appConfig.ts) for more details
 
