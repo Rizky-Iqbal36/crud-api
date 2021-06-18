@@ -26,7 +26,7 @@ $ npm run dependency:local
 
 ## Running the app
 
-Note: Finish Installation first
+Note: Finish [installation](#Installation) first
 
 ```bash
 # development
@@ -35,62 +35,6 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 ```
-
-## Test
-
-You can see the test case on github action instead <br />
-
-### Test Case List
-
-- `User API`
-  - Success => Should get a user
-  - Success => User should change password and login with that password
-  - Error => User access API should got error: Invalid token
-  - Error => User access API should got error: Invalid token => authorization not set
-  - Error => User access API should got error: Forbidden
-  - Error => User access API should got error: User blocked
-  - Error => Get user data should got error: User can't get other user's data
-  - Error => Get user data should got error: No such a user
-  - Error => Get user data should got error: Invalid param
-- `Authentication API`
-  - Success => Should register a user and return a token
-  - Success => Should login a user and return a token
-  - Error => login a user should got error: Wrong password or email
-  - Error => Register a user should got error: Email already exist
-  - Error => Register a user should got error: Invalid body
-  - Error => Register a user should got error: Invalid body => Payload isAdmin === true
-- `Admin API`
-  - Success => Should get many user
-  - Success => Should delete a user
-  - Success => Should block and unblocking a user
-  - Error => Should got error: user can't access Admin API
-  - Error => Delete a user should got error: Invalid param
-  - Error => Delete a user should got error: No such a user
-  - Error => Blocking a user should got error: Invalid param
-  - Error => Blocking a user should got error: No such a user
-- `Health API`
-  - should hit health check endpoint
-
-if you want to run the test locally, finish the Installation first and run the command bellow
-
-```bash
-# integration tests
-$ npm run test
-```
-
-## Endpoint List
-
-| Methode |      Endpoint       |    API     |                Description |
-| ------- | :-----------------: | :--------: | -------------------------: |
-| GET     |       /health       | Health API |               Check server |
-| POST    |   /auth/register    |  Auth API  |              User register |
-| POST    |     /auth/login     |  Auth API  |                 User Login |
-| GET     |  /admin/get-users   | Admin API  |        Admin get all users |
-| GET     | /admin/get-user/:id | Admin API  |           Admin get a user |
-| DELETE  |     /admin/:id      | Admin API  |        Admin delete a user |
-| PATCH   |     /admin/:id      | Admin API  | Admin block/unblock a user |
-| GET     |      /user/:id      |  User Api  |      User get his/her data |
-| PATCH   | /user/change-pw/:id |  User APi  |       User change password |
 
 ## Kubernetes
 
@@ -200,13 +144,96 @@ check the mongo-key secret:
     ![screnshoot-3](screenshoots/screnshoot-3.png)
   - Done, the application is running on port 30001
     ![screnshoot-2](screenshoots/screnshoot-2.png)
-  - Admin, credentials:
-    ```json
-    {
-      "email": "admin@admin.com",
-      "password": "lumosmaxima"
-    }
-    ```
+
+## Seeding
+
+Note: Finish [installation](#Installation) first <br />
+simply exec this command:
+
+```bash
+  npm run seeder
+```
+
+### Seeding in kubernetes
+
+You need to access the app's pod bash by execute this command:
+
+```bash
+  kubectl exec -it `app-name` -- bash
+```
+
+inside the pod bash exec this command:
+
+```bash
+  npm run seeder
+```
+
+![screnshoot-11](screenshoots/screnshoot-11.png)
+
+this is the admin credentials:
+
+```json
+{
+  "email": "admin@admin.com",
+  "password": "lumosmaxima"
+}
+```
+
+## Test
+
+You can see the test case on github action instead <br />
+
+### Test Case List
+
+- `User API`
+  - Success => Should get a user
+  - Success => User should change password and login with that password
+  - Error => User access API should got error: Invalid token
+  - Error => User access API should got error: Invalid token => authorization not set
+  - Error => User access API should got error: Forbidden
+  - Error => User access API should got error: User blocked
+  - Error => Get user data should got error: User can't get other user's data
+  - Error => Get user data should got error: No such a user
+  - Error => Get user data should got error: Invalid param
+- `Authentication API`
+  - Success => Should register a user and return a token
+  - Success => Should login a user and return a token
+  - Error => login a user should got error: Wrong password or email
+  - Error => Register a user should got error: Email already exist
+  - Error => Register a user should got error: Invalid body
+  - Error => Register a user should got error: Invalid body => Payload isAdmin === true
+- `Admin API`
+  - Success => Should get many user
+  - Success => Should delete a user
+  - Success => Should block and unblocking a user
+  - Error => Should got error: user can't access Admin API
+  - Error => Delete a user should got error: Invalid param
+  - Error => Delete a user should got error: No such a user
+  - Error => Blocking a user should got error: Invalid param
+  - Error => Blocking a user should got error: No such a user
+- `Health API`
+  - should hit health check endpoint
+
+if you want to run the test locally, finish the [installation](#Installation) first and run the command bellow
+
+```bash
+# integration tests
+$ npm run test
+```
+
+## Endpoint List
+
+| Methode |      Endpoint       |    API     |                Description |
+| ------- | :-----------------: | :--------: | -------------------------: |
+| GET     |       /health       | Health API |               Check server |
+| POST    |   /auth/register    |  Auth API  |              User register |
+| POST    |     /auth/login     |  Auth API  |                 User Login |
+| GET     |  /admin/get-users   | Admin API  |        Admin get all users |
+| GET     | /admin/get-user/:id | Admin API  |           Admin get a user |
+| DELETE  |     /admin/:id      | Admin API  |        Admin delete a user |
+| PATCH   |     /admin/:id      | Admin API  | Admin block/unblock a user |
+| GET     |      /user/:id      |  User Api  |      User get his/her data |
+| PATCH   | /user/change-pw/:id |  User APi  |       User change password |
 
 ## Docker
 
