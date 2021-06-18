@@ -45,6 +45,7 @@ export class AdminController extends BaseController {
 
   @Patch('/:id')
   async blockUser(@Param('id') id: string, @Req() req: Request) {
+    await this.validateRequest(req, BaseController.schemas.userSchema.blockUser)
     const isValidID = mongoose.Types.ObjectId.isValid(id)
 
     const { setActive, setStatus } = req.query as any

@@ -211,6 +211,7 @@ You can see the test case on github action instead <br />
   - Error => Delete a user should got error: No such a user
   - Error => Blocking a user should got error: Invalid param
   - Error => Blocking a user should got error: No such a user
+  - Error => Should block and unblocking a user: Required query not set
 - `Health API`
   - should hit health check endpoint
 

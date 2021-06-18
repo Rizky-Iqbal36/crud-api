@@ -151,4 +151,25 @@ describe(`Admin API`, () => {
     expect(res.status).toBe(404)
     expect(res.body.errors.message).toBe('USER_NOT_FOUND')
   })
+
+  it(`Error => Should block and unblocking a user: Required query not set `, async () => {
+    const user = await seedUserData.createOne({ admin: false })
+
+    const getUser = await userRepository.getOneUser(user.userId)
+    expect(getUser.isActive).toBe(true)
+    expect(getUser.status).toBe(UserStatusEnum.ACTIVE)
+    expect(user).toMatchObject({
+      userId: getUser._id,
+      email: getUser.email
+    })
+
+    const admin = await seedUserData.createOne({ admin: true })
+
+    header['x-user-id'] = admin.userId
+    header['Authorization'] = `Bearer ${admin.token}`
+
+    const res = await request(server).patch(`${url}/${user.userId}`).set(header).send()
+    expect(res.status).toBe(400)
+    expect(res.body.errors.message).toBe('INVALID_PARAM')
+  })
 })

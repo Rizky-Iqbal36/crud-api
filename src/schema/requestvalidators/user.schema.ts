@@ -28,4 +28,10 @@ export class UserSchema {
       'x-user-id': Joi.string().required()
     })
   }
+  blockUser = {
+    query: Joi.object({
+      setActive: Joi.boolean().required(),
+      setStatus: Joi.string().valid('BLOCKED', 'ACTIVE').required()
+    }).required()
+  }
 }
