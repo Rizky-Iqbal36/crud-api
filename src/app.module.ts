@@ -3,6 +3,8 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 
 import { controllers } from '@root/controllers/index'
 import { UserController } from '@root/controllers/api/user.controller'
+import { AdminController } from '@root/controllers/api/admin.controller'
+
 import { databaseProviders } from '@database/index'
 import { repositories } from '@root/repositories'
 import { services } from '@root/services'
@@ -23,6 +25,6 @@ import ResponseInterceptor from '@root/app/utils/interceptor/response.intercepto
 })
 export class AppModule {
   async configure(consumer: MiddlewareConsumer) {
-    consumer.apply(UserAuthMiddleware).forRoutes(UserController)
+    consumer.apply(UserAuthMiddleware).forRoutes(UserController, AdminController)
   }
 }
