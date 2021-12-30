@@ -26,7 +26,9 @@ $ npm run dependency:local
 
 ## Running the app
 
-Note: Finish [installation](#Installation) first
+Note: 
+- Finish [installation](#Installation) first
+- See endpoint list in [here](#EndpointList)
 
 ```bash
 # development
