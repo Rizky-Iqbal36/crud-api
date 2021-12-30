@@ -28,7 +28,7 @@ $ npm run dependency:local
 
 Note: 
 - Finish [installation](#Installation) first
-- See endpoint list in [here](#EndpointList)
+- See endpoint list in [here](#Endpoint-List)
 
 ```bash
 # development
